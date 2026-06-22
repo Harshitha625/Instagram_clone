@@ -1,0 +1,119 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <div class="post">
+            <div class="story">
+                <div class="items">
+                    <div class="profile">
+                        <div class="img">
+                            <img src="" alt="">
+                        </div>
+                        <p>Superman</p>
+                    </div>
+                </div>
+            </div>
+
+            {% for post in posts %}
+            <div class="main-post">
+                <div class="profile">
+                    <img src="{{ post.user.profile.pfp.url }}" alt="hello">
+                    <h3><a href="{% url 'profilepage' post.user.username %}">{{ post.user.username }}</a></h3> <span> {{ post.created_at | timesince }}</span>
+                </div> 
+                <div class="img">
+                    <a href="{% url 'view_post' post.id %}"><img src="{{ post.img.url }}" alt=""></a>
+                </div>
+                <div class="engagement">
+                    <div class="left">
+                        <span><i class="fa-regular fa-heart"></i></span>
+                        <span><i class="fa-regular fa-comment"></i></span>
+                        <span><i class="fa-regular fa-paper-plane"></i></span>
+                    </div>
+                    <div class="right">
+                        <span><i class="fa-regular fa-bookmark"></i></span>
+                    </div>
+                </div>
+                
+                <p style="font-size: smaller;">
+                    <strong >@{{ post.user.username }}</strong>
+                    {{ post.caption | truncatechars:20 }}</p>
+            </div>  
+            {% endfor %}
+        </div>
+
+        <!-- suggestion section -->
+        <div class="suggestion-section">
+            <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>Web_dev_mastery</h3>
+                        <p>web deb mastery</p>
+                    </div>
+                </div>
+                <div class="follow">Switch</div>
+            </div>
+
+            <div class="suggestion">
+                <div class="profile">
+                    <p>Suggested for you</p>
+                </div>
+                <div class="follow see">see All</div>
+            </div>
+
+             <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>Web_dev_mastery</h3>
+                        <p>web deb mastery</p>
+                    </div>
+                </div>
+                <div class="follow">follow</div>
+            </div>
+
+             <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>Web_dev_mastery</h3>
+                        <p>web deb mastery</p>
+                    </div>
+                </div>
+                <div class="follow">follow</div>
+            </div>
+
+             <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>Web_dev_mastery</h3>
+                        <p>web deb mastery</p>
+                    </div>
+                </div>
+                <div class="follow">follow</div>
+            </div>
+
+             <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>Web_dev_mastery</h3>
+                        <p>web deb mastery</p>
+                    </div>
+                </div>
+                <div class="follow">follow</div>
+            </div>
+        </div>
+
+{% endblock %}

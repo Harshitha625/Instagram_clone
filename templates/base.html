@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+    
+    <!-- main instagram -->
+    <div class="instagram">
+
+        <!-- left bar -->
+        <div class="left-bar">
+            <div class="items">
+                <div class="logo"><i class="fa-brands fa-instagram"></i></div>
+                <div class="logo""><i class="fa-solid fa-moon"></i></div>
+            </div>
+
+            <div class="items">
+                <a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+            </div>
+
+            <div class="items">
+                <i class="fa-solid fa-clapperboard"></i> Reels
+            </div>
+
+            <div class="items">
+                <i class="fa-solid fa-paper-plane"></i> Messages
+            </div>
+
+            <div class="items">
+                <i class="fa-solid fa-magnifying-glass"></i> Search
+            </div>
+
+            <div class="items">
+                <i class="fa-regular fa-heart"></i> Notifications
+            </div>
+
+            <div class="items">
+                <i class="fa-regular fa-square-plus"></i> Create
+            </div>
+
+            <div class="items">
+                <i class="fa-regular fa-compass"></i> Explore
+            </div>
+
+            <div class="items">
+                <i class="fa-solid fa-bars"></i> More
+            </div>
+
+            <div class="items">
+                <i class="fa-regular fa-circle-user"></i> Profile
+            </div>
+        </div>
+
+       {% block content %}
+
+       {% endblock %}
+    
+    </div>
+
+</body>
+</html>

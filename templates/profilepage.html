@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="profile-page">
+        <!-- profile and bio -->
+        <div class="profile">
+            <div>
+                <div class="left">
+                <div class="img">
+                    <img src="{{ profile.pfp.url }}" alt="">
+                </div>
+                </div>
+                <div class="right">
+                    <h3>{{ user.username }}</h3><!-- username -->
+                    <p>{{ user.name }}</p>
+                    <div class="counts">
+                        <span>{{ posts_count }} Posts</span>
+                        <span>0 followers</span>
+                        <span>0 following</span>
+                    </div>
+                    <pre>{{ profile.bio }}</pre>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="follow-btn">Follow</button>
+                <button class="message-btn">Message</button>
+            </div>
+        </div>
+
+        <!-- posts goes here -->
+         <div class="posts">
+            {% for post in posts %}
+                <a href="{% url 'view_post' post.id %}"><img src="{{ post.img.url }}" alt=""></a>
+            {% endfor %}
+            <div class="add-post">
+                <a href="{% url 'add_post' %}"><i class="fa-solid fa-plus"></i></a>
+                <p>add a new post</p>
+            </di>
+         </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,376 @@
+*{
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* instagram - section */
+.instagram{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+}
+
+/* left - bar */
+.left-bar{
+    width: 20%;
+    height: 100vh;
+    border-right: 1px solid #504949;
+}
+
+.left-bar .items{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 12px;
+    font-size: 16px;
+    margin: 10px;
+    gap: 15px;
+}
+
+/* logo */
+.logo {
+    font-size: 35px;
+}
+
+
+/* post - section */
+.post{
+    width: 55%;
+    height: 100vh;
+
+    overflow-y: auto;
+    scrollbar-width:none;
+    scrollbar-color: #444 #0f0f0f;
+}
+
+
+.story .items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.post .story{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    margin: 20px;
+    /* scolling */
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 20px;
+}
+
+.post .story .items .profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.post .story .items .profile .img{
+    border-radius: 50%;
+    display: inline-block;
+    background: conic-gradient(
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888,
+        #f09433
+    );
+    padding: 3px;
+}
+
+.post .story .items .profile .img img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    padding: 3px;
+}
+
+.post .main-post{
+    height:auto;
+    width: 70%;
+    margin:auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+
+}
+
+.post .main-post .profile{
+    margin: 10px;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.post .main-post .profile img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding: 2px;
+    display: inline-block;
+    background: conic-gradient(
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888,
+        #f09433
+    );
+}
+
+.post .main-post .img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post .main-post .img img{
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.post .main-post .engagement{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post .main-post .engagement .left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* suggestion - section */
+
+.suggestion-section{
+    width: 25%;
+    height: 100vh;
+}
+
+.suggestion-section .suggestion{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.suggestion-section .profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-section .profile .img img{
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.suggestion-section .suggestion .follow{
+    color: blue;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.suggestion-section .suggestion .profile p{
+    color: #bcbab7;
+}
+
+.suggestion-section .suggestion .see{
+    color: white;
+}
+
+.m{
+    margin-top: 40px;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+
+
+
+/* profile page styling */
+
+.profile-page{
+    width: 70%;
+    margin: auto;
+    color: white;
+    overflow-y: auto;
+    scrollbar-width: 0px;
+    scroll-behavior: smooth;
+}
+
+/* MAIN PROFILE SECTION */
+.profile-page .profile{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px 0;
+    border-bottom: 1px solid #333;
+}
+
+
+.profile-page .profile > div:first-child{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* LEFT IMAGE */
+.profile-page .profile .left .img img{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* RIGHT SIDE TEXT */
+.profile-page .profile .right h3{
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.profile-page .profile .right p{
+    color: #aaa;
+    margin: 5px 0;
+}
+
+/* COUNTS */
+.profile-page .profile .counts{
+    display: flex;
+    gap: 25px;
+    margin: 10px 0;
+}
+
+.profile-page .profile .counts span{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* BIO */
+.profile-page .profile pre{
+    color: #bbb;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+/* BUTTONS */
+.profile-page .buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.profile-page .follow-btn,
+.profile-page .message-btn{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.profile-page .follow-btn{
+    background: #0095f6;
+    color: white;
+}
+
+.profile-page .message-btn{
+    background: #333;
+    color: white;
+}
+
+/* POSTS GRID */
+.profile-page .posts{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 20px;
+}
+
+/* POST IMAGES */
+.profile-page .posts img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-page .posts img:hover{
+    opacity: 0.7;
+}
+
+
+.profile-page .add-post{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+}
+
+
+
+
+/* add post page */
+
+.add_post_container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.add_post_container .btn{
+     background: conic-gradient(
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888,
+        #f09433
+    );
+    padding:10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+    
+
+/* viewpost page */
+
+.post_container{
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    margin: auto;
+}
+
