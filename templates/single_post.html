@@ -8,13 +8,19 @@
                 <img src="{{ post.user.profile.pfp.url }}" alt="hello">
                 <h3><a href="{% url 'profilepage' post.user.username %}">{{ post.user.username }}</a></h3> <span> {{ post.created_at | timesince }}</span>
             </div> 
-            <div class="img">
-                <a href="{% url 'view_post' post.id %}"><img src="{{ post.img.url }}" alt=""></a>
+            <div class="media">
+                {% if post.img %}
+                    <img src="{{ post.img.url }}" alt="">
+                {% elif post.video %}
+                    <video controls muted>
+                        <source src="{{ post.video.url }}" type="video/mp4">
+                    </video>
+                {% endif %}
             </div>
             <div class="engagement">
                 <div class="left">
                     <span><i class="fa-regular fa-heart"></i></span>
-                    <span><i class="fa-regular fa-comment"></i></span>
+                    <span><i class="fa-regular fa-comment" onclick="commentfun(this)"></i></span>
                     <span><i class="fa-regular fa-paper-plane"></i></span>
                 </div>
                 <div class="right">
@@ -25,11 +31,83 @@
             <p style="font-size: smaller;">
                 <strong >@{{ post.user.username }}</strong>
                 {{ post.caption | truncatechars:20 }}</p>
+                
+             <!-- Comment section -->
+                <div class="showcomments hidden">
+                    {% for comment in post.comments_set.all %}
+                        {% if not comment.parent %}
+                            <div class="comment">
+                                <div>
+                                    <span><img src="{{ comment.user.profile.pfp.url }}" alt="" width="20px" height="20px"></span>
+                                    <span class="username">{{ comment.user.username }} . {{ comment.created_at | timesince }} ago</span>
+                                </div>
+                                <span class="text">{{ comment.text }}</span>
+                                <button type="button" onclick="showReplyForm({{ comment.id }})">
+                                    Reply
+                                </button>
 
-            <button type="submit" class="btn"  style="padding:5px 10px;font-weight:bold;"><a href="{% url 'edit_post' post.id %}">edit</a></button>
-            <button type="submit" class="btn" style="padding:5px 10px;margin:3%;font-weight:bold;"><a href="{% url 'delete_post' post.id %}">delete</a></button>
-            
-            
+                                <!-- Reply Form -->
+                                <form method="post" id="reply-form-{{ comment.id }}" style="display:none;">
+                                    {% csrf_token %}
+                                    <input type="text" name="text" placeholder="Reply...">
+
+                                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+
+                                    <button type="submit">Reply</button>
+                                </form>
+
+                                <!-- Replies -->
+                                <div class="replies">
+                                    {% for reply in comment.replies.all %}
+                                        <div class="reply" style="margin-left:30px;">
+                                            <span>
+                                                <img src="{{ reply.user.profile.pfp.url }}" alt="" width="20px" height="20px">
+                                            </span>
+
+                                            <span>{{ reply.user.username }}</span>
+                                            <span>{{ reply.text }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="add-comment" >
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ comment_form.text }}
+                        <input type="hidden" name="post_id" value="{{post.id}}">
+                        <button type="submit" style="padding: 5px;margin-top:5px">+ comment</button>
+                    </form>
+                    </div>
+                    <!-- comments end here -->
+                </div> 
+            </div>
+            {% if request.user.username == post.user.username %}
+            <div>
+                 <button type="submit" class="btn"  style="padding:5px 10px;font-weight:bold;"><a href="{% url 'edit_post' post.id %}">edit</a></button>
+                <button type="submit" class="btn" style="padding:5px 10px;margin:3%;font-weight:bold;"><a href="{% url 'delete_post' post.id %}">delete</a></button>
+            </div>
+            {% endif %}
         </div>  
     </div>
+
+     <script>
+            function commentfun(icon){
+                const comments = icon.closest('.main-post').querySelector('.showcomments');
+                comments.classList.toggle('hidden')
+            }
+
+             function showReplyForm(commentId) {
+                const form = document.getElementById("reply-form-" + commentId);
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            }
+        </script>
 {% endblock %}

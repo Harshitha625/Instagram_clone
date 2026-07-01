@@ -135,15 +135,19 @@ a{
     );
 }
 
-.post .main-post .img{
+
+.post .main-post .media{
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-.post .main-post .img img{
-    height: auto;
+.post .main-post .media img,
+.post .main-post .media video{
     width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: cover;
     border-radius: 10px;
 }
 
@@ -160,6 +164,119 @@ a{
     gap: 10px;
 }
 
+
+/* comments */
+
+
+.hidden{
+    display: none;
+}
+
+.main-post .showcomments{
+    margin: 10px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.main-post .showcomments .comment{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.main-post .showcomments .comment .username{
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+}
+
+.main-post .showcomments .comment .text{
+    color: #d4d4d4;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.add-comment form{
+    margin-top: 10px;
+}
+
+.add-comment textarea{
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+}
+
+.add-comment button{
+    border-radius: 5px;
+    background-color: white;
+    color: #0f0f0f;
+}
+
+.showcomments .comment span img{
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* ===================== */
+/* Replies */
+/* ===================== */
+
+.showcomments .comment{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.showcomments .comment button{
+    margin: 5px 0 5px 28px;
+    border: none;
+    background: none;
+    color: #8e8e8e;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.showcomments .comment form{
+    margin-left: 28px;
+    margin-bottom: 8px;
+}
+
+.showcomments .comment form input[type="text"]{
+    padding: 5px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    outline: none;
+}
+
+.showcomments .comment form button{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.showcomments .replies{
+    margin-left: 35px;
+    margin-top: 5px;
+}
+
+.showcomments .reply{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.showcomments .reply img{
+    border-radius: 50%;
+}
 
 /* suggestion - section */
 
@@ -309,7 +426,7 @@ html{
 .profile-page .posts{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
+    gap: 5px;
     margin-top: 20px;
 }
 
@@ -320,6 +437,13 @@ html{
     object-fit: cover;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.profile-page .posts video{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .profile-page .posts img:hover{

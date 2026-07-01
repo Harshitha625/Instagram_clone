@@ -4,6 +4,7 @@
     <div class="profile-page">
         <!-- profile and bio -->
         <div class="profile">
+            <a href="{% url 'home' %}"><i class="fa-solid fa-arrow-left"></i></a>
             <div>
                 <div class="left">
                 <div class="img">
@@ -24,18 +25,31 @@
             <div class="buttons">
                 <button class="follow-btn">Follow</button>
                 <button class="message-btn">Message</button>
+                {% if request.user.username == profile.user.username %}
+                <button class="message-btn"><a href="{% url 'editProfile' user.username %}">edit</a></button>
+                {% endif %}
             </div>
         </div>
 
         <!-- posts goes here -->
          <div class="posts">
             {% for post in posts %}
-                <a href="{% url 'view_post' post.id %}"><img src="{{ post.img.url }}" alt=""></a>
+                <a href="{% url 'view_post' post.id %}">
+                {% if post.img %}
+                    <img src="{{ post.img.url }}" alt="">
+                {% elif post.video %}
+                    <video muted loop>
+                        <source src="{{ post.video.url }}">
+                    </video>
+                {% endif %}
+                </a>
             {% endfor %}
             <div class="add-post">
+                {% if request.user.username == profile.user.username %}
                 <a href="{% url 'add_post' %}"><i class="fa-solid fa-plus"></i></a>
                 <p>add a new post</p>
-            </di>
+                {% endif %}
+            </div>
          </div>
     </div>
 {% endblock %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'post',
     'crispy_forms',
     'crispy_bootstrap4',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = 'home' # Directs user to home page following execution
+LOGOUT_REDIRECT_URL = '/accounts/login/'
