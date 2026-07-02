@@ -53,3 +53,26 @@ class Comments(models.Model):
     def __str__(self):
         return f"{self.user.username}:{self.text[:30]}"
     
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user','post') #single like by a single user
+
+
+class Follow(models.Model):
+    follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name='following')
+    following = models.ForeignKey(User,on_delete=models.CASCADE,related_name='followers')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ("follower","following")
+
+    def __str__(self):
+        return f'{self.follower.username} "follows" {self.following.username}'
+    
+    

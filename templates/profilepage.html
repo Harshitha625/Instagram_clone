@@ -16,17 +16,25 @@
                     <p>{{ user.name }}</p>
                     <div class="counts">
                         <span>{{ posts_count }} Posts</span>
-                        <span>0 followers</span>
-                        <span>0 following</span>
+                        <span>{{ follower_count }} followers</span>
+                        <span>{{ following_count }} following</span>
                     </div>
                     <pre>{{ profile.bio }}</pre>
                 </div>
             </div>
             <div class="buttons">
-                <button class="follow-btn">Follow</button>
+                {% if request.user.username != user %}
+                <a href="{% url 'follow_user' user.username %}">
+                    {% if is_following %}
+                    <button class="follow-btn">Unfollow</button>
+                    {% else %}
+                    <button class="follow-btn">Follow</button>
+                    {% endif %}
+                </a>
                 <button class="message-btn">Message</button>
+                {% endif %}
                 {% if request.user.username == profile.user.username %}
-                <button class="message-btn"><a href="{% url 'editProfile' user.username %}">edit</a></button>
+                    <button class="message-btn"><a href="{% url 'editProfile' user.username %}">edit</a></button>
                 {% endif %}
             </div>
         </div>

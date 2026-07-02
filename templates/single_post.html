@@ -19,8 +19,14 @@
             </div>
             <div class="engagement">
                 <div class="left">
-                    <span><i class="fa-regular fa-heart"></i></span>
-                    <span><i class="fa-regular fa-comment" onclick="commentfun(this)"></i></span>
+                    <span><a href="{% url 'like_post' post.id %}">
+                        {% if post.liked %}
+                            <i class="fa-solid fa-heart" style="color:red;"></i>
+                        {% else %}
+                            <i class="fa-regular fa-heart"></i>
+                        {% endif %}
+                    </a><small>{{ post.like_set.count }}</small></span>
+                    <span><i class="fa-regular fa-comment" onclick="commentfun(this)"></i><small>{{ post.comments_set.count }}</small></span>
                     <span><i class="fa-regular fa-paper-plane"></i></span>
                 </div>
                 <div class="right">

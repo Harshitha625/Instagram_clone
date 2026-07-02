@@ -13,4 +13,8 @@ urlpatterns = [
 
     # delete comment
     path('delele_comment/<int:pk>/',views.delete_comment,name='delete_comment'),
+    # like post
+    path('like_post/<int:pk>/',views.like_post,name='like_post'),
+    # follow 
+    path('follow/<str:username>/',views.follow_user,name='follow_user'),
 ]
