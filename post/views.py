@@ -165,7 +165,7 @@ def like_post(request,pk):
 
     return redirect(request.META.get("HTTP_REFERER","home"))
 
-
+@login_required
 def follow_user(request,username):
     user_to_follow = get_object_or_404(User,username = username)
     # prevent follow urself
@@ -184,3 +184,16 @@ def follow_user(request,username):
             following = user_to_follow
         )
     return redirect('profilepage',username = username)
+
+
+def search_user(request):
+    keyword = request.GET.get('q')
+    if keyword:
+        users = User.objects.filter(username__icontains = keyword)
+    else:
+        users = User.objects.none()
+    context = {
+        'users':users,
+        'keyword':keyword,
+    }
+    return render(request,'search_user.html',context)

@@ -17,4 +17,6 @@ urlpatterns = [
     path('like_post/<int:pk>/',views.like_post,name='like_post'),
     # follow 
     path('follow/<str:username>/',views.follow_user,name='follow_user'),
+    # search users
+    path('search/',views.search_user,name='search_user'),
 ]
