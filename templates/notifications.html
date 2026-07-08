@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="notification-container">
+    <a href="javascript:history.back()" style="font-weight: 600;">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <div class="notifications">
+        {% for notification in notifications %}
+
+        <div class="notification">
+            <img src="{{ notification.sender.profile.pfp.url }}" alt="" width="30px" height="30px" style="border-radius: 50%;">
+            {% if notification.notification_type == "like" %}
+                ❤️ <strong><a href="{% url 'profilepage' notification.sender.username %}">{{ notification.sender.username }}</a></strong> liked your<a href="{% url 'view_post' notification.post.id %}">post.</a>
+
+            {% elif notification.notification_type == "comment" %}
+                💬 <strong><a href="{% url 'profilepage' notification.sender.username %}">{{ notification.sender.username }}</a></strong> commented on your<a href="{% url 'view_post' notification.post.id %}">post.</a>
+
+            {% elif notification.notification_type == "follow" %}
+                👤 <strong><a href="{% url 'profilepage' notification.sender.username %}">{{ notification.sender.username }}</a></strong> started following you.
+
+            {% endif %}
+
+        </div>
+
+        {% empty %}
+            <p>No notifications yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

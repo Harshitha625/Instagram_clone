@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="follow-card">
+        <h3><a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>Following</h3>
+    </div>
+    
+    {% if following %}
+     {% for follow in following %}
+        <div class="follow-card">
+            <img src="{{ follow.following.profile.pfp.url }}" alt="" height="30px" width="30px">
+            <h3><a href="{% url 'profilepage' follow.following.username %}">{{follow.following.username}}</a></h3>
+        </div>
+    {% endfor %}
+    {% else %}
+    <h3>Not following anyone yet.</h3>
+    {% endif %}
+</div>
+{% endblock%}

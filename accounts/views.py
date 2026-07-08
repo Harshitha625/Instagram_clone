@@ -3,6 +3,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from  django.contrib import auth
 from . forms import RegistrationForm
+from post.models import Profile
+
 # Create your views here
 def login(request):
     if request.method == "POST":
@@ -25,8 +27,10 @@ def register(request):
         form = RegistrationForm(request.POST)
         # checks validity of data from the form
         if form.is_valid():
-            form.save()
-            return redirect('register')
+            user = form.save()
+            auth.login(request,user)
+            Profile.objects.create(user = user)
+            return redirect('editProfile',username = user.username)
         else:
             print(form.errors)
     else:

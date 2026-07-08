@@ -17,6 +17,18 @@ urlpatterns = [
     path('like_post/<int:pk>/',views.like_post,name='like_post'),
     # follow 
     path('follow/<str:username>/',views.follow_user,name='follow_user'),
+    # show followers & following
+    path('followers/<str:username>/',views.view_followers,name='view_followers'),
+    path('following/<str:username>/',views.view_following,name='view_following'),
     # search users
     path('search/',views.search_user,name='search_user'),
+    # save posts
+    path('save/<int:pk>',views.save_post,name='save'),
+    # show saved posts
+    path('saved_posts/',views.saved_posts,name='saved_posts'),
+    # show notifications
+    path('view_notifications/',views.view_notifications,name = 'view_notifications'),
+    # add the story
+    path('story/add/',views.add_story,name = 'add_story'),
+    path('stories/<str:username>/',views.view_story,name = 'view_story'),
 ]

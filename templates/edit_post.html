@@ -2,6 +2,7 @@
 
 {% block content %}
     {% load crispy_forms_tags %}
+    <a href="javascript:history.back()" style="margin:auto"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="add_post_container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -11,3 +12,4 @@
     </div>
 
 {% endblock %}
+

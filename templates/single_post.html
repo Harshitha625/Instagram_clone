@@ -3,7 +3,7 @@
 {% block content %}
     <div class="post">
         <div class="main-post">
-            <a href="{% url 'profilepage' post.user.username %}"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
             <div class="profile">
                 <img src="{{ post.user.profile.pfp.url }}" alt="hello">
                 <h3><a href="{% url 'profilepage' post.user.username %}">{{ post.user.username }}</a></h3> <span> {{ post.created_at | timesince }}</span>
@@ -30,7 +30,14 @@
                     <span><i class="fa-regular fa-paper-plane"></i></span>
                 </div>
                 <div class="right">
-                    <span><i class="fa-regular fa-bookmark"></i></span>
+                    <span><a href="{% url 'save' post.id %}">
+                            {% if not post.saved %}
+                            <i class="fa-regular fa-bookmark" ></i>
+                            {% else %}
+                            <i class="fa-solid fa-bookmark" style="color:white;"></i>
+                            {% endif %}
+                            </a>
+                    </span>
                 </div>
             </div>
             

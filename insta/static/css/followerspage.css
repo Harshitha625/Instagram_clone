@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10% auto;
+}
+
+.follow-card{
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.follow-card img{
+    border-radius: 50%;
+}

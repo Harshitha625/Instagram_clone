@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="follow-card">
+        <h3><a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a> Followers</h3>    
+    </div>
+
+    {% if followers %}
+     {% for follow in followers %}
+        <div class="follow-card">
+            <img src="{{ follow.follower.profile.pfp.url }}" alt="" height="30px" width="30px">
+            <h3><a href="{% url 'profilepage' follow.follower.username %}">{{follow.follower.username}}</a></h3>
+        </div>
+    {% endfor %}
+    {% else %}
+    <h3>No followers </h3>
+    {% endif %}
+</div>
+{% endblock%}

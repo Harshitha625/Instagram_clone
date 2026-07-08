@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h3>Saved Posts by {{ request.user }}</h3>
+    <div class="savedpostpage">
+        {% if saved_posts %}
+        <div class="posts">
+                {% for saved in saved_posts %}
+                    <a href="{% url 'view_post' saved.post.id %}">
+                    {% if saved.post.img %}
+                        <img src="{{ saved.post.img.url }}" alt="">
+                    {% elif saved.post.video %}
+                        <video muted loop>
+                            <source src="{{ saved.post.video.url }}">
+                        </video>
+                    {% endif %}
+                    </a>
+                {% endfor %}
+        </div>
+        {% else %}
+            <h3>No saved posts yet.</h3>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

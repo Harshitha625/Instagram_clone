@@ -76,3 +76,40 @@ class Follow(models.Model):
         return f'{self.follower.username} "follows" {self.following.username}'
     
     
+class Savedposts(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user","post")
+
+    def __str__(self):
+        return f'{self.user}" saves " {self.post}'
+    
+
+class Notifications(models.Model):
+    sender = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sent_notifications")
+    receiver = models.ForeignKey(User,on_delete=models.CASCADE,related_name="received_notifications")
+    post = models.ForeignKey(Posts,on_delete=models.CASCADE,null=True,blank=True)
+    notification_type = models.CharField(max_length=30)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Notifications"
+
+    def __str__(self):
+        return f'{self.receiver} notification'
+    
+
+
+# stories model
+class Story(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="stories/")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
