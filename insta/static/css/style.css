@@ -227,6 +227,9 @@ a{
     height: 50px;
     border-radius: 10px;
     outline: none;
+    background-color: #000;
+    color: #fff;
+    padding: 2px;
 }
 
 .add-comment button{

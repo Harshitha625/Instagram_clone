@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect,render
-from . models import Posts,Profile,Comments,Like,Follow,Savedposts,Notifications,Story
+from . models import Posts,Profile,Comments,Like,Follow,Savedposts,Notifications,Story,Conversation,Messages
 from django.contrib.auth.models import User
 from . forms import addPostForm,ChangeProfile,CommentForm,StoryForm
 from django.contrib.auth.decorators import login_required
@@ -359,3 +359,51 @@ def view_story(request,username):
         'story_user':user,
     }
     return render(request, "view_story.html", context)
+
+
+def inbox(request):
+    conversations = Conversation.objects.filter(
+        participants= request.user
+    )
+    context = {
+        'conversations':conversations
+    }
+    return render(request,'inbox.html',context)
+
+def start_chat(request,username):
+    other_user = get_object_or_404(User,username = username)
+    conversation = Conversation.objects.filter(
+        participants = request.user
+    ).filter(
+        participants = other_user
+    ).first()
+    if not conversation:
+        conversation = Conversation.objects.create()
+        conversation.participants.add(request.user,other_user)
+
+    return redirect("chat",conversation.id)
+
+def chat(request,conversation_id):
+    conversation = get_object_or_404(
+        Conversation,id = conversation_id,
+    )
+    if request.method == "POST":
+        text = request.POST.get('text')
+        if text:
+            Messages.objects.create(
+                conversation = conversation,
+                sender = request.user,
+                text = text,
+            )
+            return redirect("chat",conversation_id = conversation_id)
+    messages = Messages.objects.filter(
+        conversation = conversation,
+    ).order_by("created_at")
+    context = {
+        "conversation": conversation,
+        "messages": messages,
+    }
+    return render(request,'chat.html',context)
+
+
+

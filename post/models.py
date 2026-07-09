@@ -113,3 +113,15 @@ class Story(models.Model):
     def __str__(self):
         return self.user.username
 
+
+# model for inbox
+class Conversation(models.Model):
+    participants = models.ManyToManyField(User)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+# store messages or chat model
+class Messages(models.Model):
+    conversation = models.ForeignKey(Conversation,on_delete=models.CASCADE)
+    sender = models.ForeignKey(User,on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

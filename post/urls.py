@@ -31,4 +31,9 @@ urlpatterns = [
     # add the story
     path('story/add/',views.add_story,name = 'add_story'),
     path('stories/<str:username>/',views.view_story,name = 'view_story'),
+
+    # messages
+    path('messages/',views.inbox,name='inbox'),
+    path('start_chat/<str:username>/',views.start_chat,name='start_chat'),
+    path('chat/<int:conversation_id>/',views.chat,name='chat'),
 ]

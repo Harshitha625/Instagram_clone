@@ -31,7 +31,7 @@
                     <button class="follow-btn">Follow</button>
                     {% endif %}
                 </a>
-                <button class="message-btn">Message</button>
+                <a href="{% url 'start_chat' user.username %}"><button class="message-btn">Message</button></a>
                 {% endif %}
                 {% if request.user.username == profile.user.username %}
                     <a href="{% url 'editProfile' user.username %}"><button class="message-btn">edit</button></a>

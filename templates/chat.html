@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="display:flex;justify-content:center;align-items:center;height:100vh;margin:auto;">
+    <div style="width:500px;height:90vh;background:#111;border:1px solid #333;border-radius:10px;display:flex;flex-direction:column;">
+        <!-- Header -->
+        <div style="padding:15px;border-bottom:1px solid #333;font-weight:bold;font-size:18px;text-align:center;">
+            <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+            Chat
+        </div>
+        <!-- Messages -->
+        <div style="flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:15px;scrollbar-width:thin;">
+            {% for message in messages %}
+                {% if message.sender == request.user %}
+                <div style="display:flex;justify-content:flex-end;">
+                    <div style="background:#0095f6;color:white;padding:10px 15px;border-radius:20px;max-width:70%;">
+                        {{ message.text }}
+                    </div>
+                </div>
+                {% else %}
+                <div style="display:flex;justify-content:flex-start;align-items:flex-end;gap:10px;">
+                    <img src="{{ message.sender.profile.pfp.url }}"
+                         style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+                    <div style="background:#262626;color:white;padding:10px 15px;border-radius:20px;max-width:70%;">
+                        {{ message.text }}
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <p style="text-align:center;color:gray;">No messages yet.</p>
+            {% endfor %}
+        </div>
+        <div>
+             <form action="" method="post" style="background-color: #262626;display:flex;margin:10px;border-radius:10px;overflow:hidden;">
+                {% csrf_token %}
+                <textarea style="width:90%;padding:10px;background-color:#262626;color:#fff" name="text"></textarea>
+                <button type="submit" style="font-size: 1.3rem;background-color:#0095f6;width:10%;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-arrow-up"></i></button></span>
+             </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
