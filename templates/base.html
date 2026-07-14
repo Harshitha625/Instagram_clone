@@ -6,74 +6,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Clone</title>
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/savedposts.css' %}">
     <link rel="stylesheet" href="{% static 'css/followerspage.css' %}">
     <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+
+    <style>
+        .active-menu{
+            background: rgba(255,255,255,0.15);
+            border-radius:8px;
+        }
+    </style>
+
 </head>
 <body>
-    
-    <!-- main instagram -->
-    <div class="instagram">
 
-        <!-- left bar -->
-        <div class="left-bar">
-            <div class="items">
-                <div class="logo"><i class="fa-brands fa-instagram"></i></div>
-                <div class="logo""><i class="fa-solid fa-moon"></i></div>
+<div class="instagram">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="left-bar">
+
+        <div class="items">
+            <div class="logo">
+                <i class="fa-brands fa-instagram"></i>
             </div>
 
-            <div class="items">
-              <i class="fa-solid fa-house"></i>  <a href="{% url 'home' %}">Home</a>
-            </div>
-
-            <div class="items">
-                <i class="fa-solid fa-clapperboard"></i> Reels
-            </div>
-
-            <div class="items">
-                <i class="fa-solid fa-paper-plane"></i> <a href="{% url 'inbox'%}">Messages</a>
-            </div>
-
-            <div class="items">
-                <i class="fa-solid fa-magnifying-glass"></i> <a href="{% url 'search_user' %}">Search</a>
-            </div>
-
-            <div class="items">
-                <a href="{% url 'view_notifications' %}" class="notification-link">
-                    <i class="fa-regular fa-bell"></i>
-                    {% if notification_count %}
-                        <span class="badge">{{ notification_count }}</span>
-                    {% endif %}
-                    Notifications
-                </a>
-            </div>
-
-            <div class="items">
-              <i class="fa-regular fa-square-plus"></i>   <a href="{% url 'add_post' %}">Create</a>
-            </div>
-
-            <div class="items">
-                <i class="fa-regular fa-compass"></i> Explore
-            </div>
-
-            <div class="items">
-                <i class="fa-solid fa-bars"></i> More
-            </div>
-
-            <div class="items">
-                <i class="fa-regular fa-circle-user"></i> <a href="{% url 'profilepage' request.user.username %}">Profile</a> 
+            <div class="logo">
+                <i class="fa-solid fa-moon"></i>
             </div>
         </div>
 
-       {% block content %}
+        <div class="items {% if request.resolver_match.url_name == 'home' %}active-menu{% endif %}">
+            <a href="{% url 'home' %}">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+        </div>
 
-       {% endblock %}
-    
+        <div class="items">
+            <a href="">
+                <i class="fa-solid fa-clapperboard"></i>
+                <span>Reels</span>
+            </a>
+        </div>
+
+        <div class="items {% if request.resolver_match.url_name == 'inbox' %}active-menu{% endif %}">
+            <a href="{% url 'inbox' %}">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Messages</span>
+            </a>
+        </div>
+
+        <div class="items {% if request.resolver_match.url_name == 'search_user' %}active-menu{% endif %}">
+            <a href="{% url 'search_user' %}">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </a>
+        </div>
+
+        <div class="items {% if request.resolver_match.url_name == 'view_notifications' %}active-menu{% endif %}">
+            <a href="{% url 'view_notifications' %}" class="notification-link">
+                <i class="fa-regular fa-bell"></i>
+                <span>Notifications</span>
+
+                {% if notification_count %}
+                    <span class="badge">{{ notification_count }}</span>
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="items {% if request.resolver_match.url_name == 'add_post' %}active-menu{% endif %}">
+            <a href="{% url 'add_post' %}">
+                <i class="fa-regular fa-square-plus"></i>
+                <span>Create</span>
+            </a>
+        </div>
+
+        <div class="items">
+            <a href="">
+                <i class="fa-regular fa-compass"></i>
+                <span>Explore</span>
+            </a>
+        </div>
+
+        <div class="items">
+            <a href="">
+                <i class="fa-solid fa-bars"></i>
+                <span>More</span>
+            </a>
+        </div>
+
+        <div class="items {% if request.resolver_match.url_name == 'profilepage' %}active-menu{% endif %}">
+            <a href="{% url 'profilepage' request.user.username %}">
+                <i class="fa-regular fa-circle-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+
+        {% if request.user.is_superuser %}
+        <div class="items {% if request.resolver_match.url_name == 'admin_dashboard' or request.resolver_match.url_name == 'manage_users' or request.resolver_match.url_name == 'manage_posts' or request.resolver_match.url_name == 'manage_comments' or request.resolver_match.url_name == 'manage_stories' %}active-menu{% endif %}">
+            <a href="{% url 'admin_dashboard' %}">
+                <i class="fa-solid fa-gauge"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+        {% endif %}
+
     </div>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
 
 </body>
 </html>

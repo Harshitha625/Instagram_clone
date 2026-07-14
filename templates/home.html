@@ -3,14 +3,6 @@
 {% block content %}
 
     <div class="post">
-        <div style="display: flex;justify-content:flex-end;gap:20px;margin:10px;">
-            <a href="">logged in as {{ request.user.username }}</a>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" style="padding:5px;background:white;color:black;border-radius:5px;font-weight:bold;">Logout</button>
-            </form>
-        </div>
-
             <div class="story">
                 <div>
                     <div  style="display: flex;justify-content:center;padding:25px;border:1px solid #ccc;border-radius:50%">
@@ -88,12 +80,12 @@
                                 <span><a href="{% url 'delete_comment' comment.id %}"><i class="fa-solid fa-trash"></i></a></span>
                             </div>
                             <span class="text">{{ comment.text }}</span>
-                            <span><button type="button" onclick="showReplyForm({{ comment.id }})"">
+                            <span><button type="button" onclick="showReplyForm({{ comment.id }})">
                                 Reply
                             </button></span>
 
                             <!-- Reply Form -->
-                            <form method="post" id="reply-form-{{ comment.id }}" style="display:none;">
+                            <form method="post" action="" id="reply-form-{{ comment.id }}" style="display:none;">
                                 {% csrf_token %}
                                 <input type="text" name="text" placeholder="Reply...">
 
@@ -111,8 +103,8 @@
                                             <img src="{{ reply.user.profile.pfp.url }}" alt="" width="20px" height="20px">
                                         </span>
 
-                                        <span>{{ reply.user.username }} . <small>{{ comment.created_at | timesince }} ago</small></span>
-                                        <span><a href="{% url 'delete_comment' comment.id %}"><i class="fa-solid fa-trash"></i></a></span>
+                                        <span>{{ reply.user.username }} . <small>{{ reply.created_at | timesince }} ago</small></span>
+                                        <span><a href="{% url 'delete_comment' reply.id %}"><i class="fa-solid fa-trash"></i></a></span>
                                         <span>{{ reply.text }}</span>
                                     </div>
                                 {% endfor %}
@@ -125,61 +117,19 @@
                 <div class="add-comment" >
                 <form action="" method="post">
                     {% csrf_token %}
-                    {{ comment_form.text }}
-                    <input type="hidden" name="post_id" value="{{post.id}}">
-                    <button type="submit" style="padding: 5px;margin-top:5px">+ comment</button>
+                    <div class="add">
+                        {{ comment_form.text }}
+                        <input type="hidden" name="post_id" value="{{post.id}}">
+                        <button type="submit" style="padding: 5px;"><i class="fa-solid fa-arrow-up"></i>add</button>
+                    </div>
                 </form>
                 </div>
                 <!-- comments end here -->
             </div> 
             {% endfor %}
         </div>
-
-        <!-- suggestion section -->
-        <div class="suggestion-section">
-
-            <div class="suggestion">
-                <div class="profile">
-                    <div class="img">
-                        <img src="/home/harshitha/Pictures/Webcam/2026-05-14-161834.jpg" alt="">
-                    </div>
-                    <div class="text">
-                        <h3>Web_dev_mastery</h3>
-                        <p>web deb mastery</p>
-                    </div>
-                </div>
-                <div class="follow">Switch</div>
-            </div>
-    
-            <div class="suggestion">
-                <div class="profile">
-                    <p>Suggested for you</p>
-                </div>
-                <div class="follow see">see All</div>
-            </div>
-
-            {% for suggestion in suggestions %}
-            <div class="suggestion">
-                <div class="profile">
-                    <div class="img">
-                        <img src="{{ suggestion.profile.pfp.url }}" alt="">
-                    </div>
-
-                    <div class="text">
-                        <h3>{{ suggestion.username }}</h3>
-                        <p>{{ suggestion.first_name }} {{ suggestion.last_name }}</p>
-                    </div>
-                </div>
-
-                <div class="follow">
-                    <a href="{% url 'follow_user' suggestion.username %}">
-                        Follow
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-            
-        </div>
+        
+        {% include 'suggestions.html' %}
 
         <script>
             function commentfun(icon){

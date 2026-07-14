@@ -3,25 +3,64 @@
 {% block content %}
 
 <div style="width:500px;margin:30px auto;background:#111;border:1px solid #333;border-radius:10px;overflow:hidden;">
+
     <div style="padding:15px;border-bottom:1px solid #333;font-size:22px;font-weight:bold;">
-        <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="{% url 'home' %}"><i class="fa-solid fa-arrow-left"></i></a>
         Messages
+
+        <div style="display:flex;float:right;gap:5px;">
+            <form action="" method="GET" style="display:none;" id="form-search">
+                <input type="text"
+                       name="q"
+                       value="{{ request.GET.q }}"
+                       placeholder="Search user..."
+                       style="padding:5px;background:black;color:white;border:1px solid #555;">
+                <button type="submit" style="padding:5px;">Go</button>
+            </form>
+
+            <button type="button" style="padding:5px;" onclick="showForm()">
+                Search
+            </button>
+        </div>
     </div>
-    {% for convo in conversations %}
-        {% for user in convo.participants.all %}
-            {% if user != request.user %}
-            <a href="{% url 'chat' convo.id %}" style="text-decoration:none;color:white;">
+
+    <!-- Search Results -->
+    {% if search_users %}
+        {% for user in search_users %}
+            <a href="{% url 'start_chat' user.username %}" style="text-decoration:none;color:white;">
                 <div style="display:flex;align-items:center;gap:15px;padding:15px;border-bottom:1px solid #222;">
                     <img src="{{ user.profile.pfp.url }}"
-                         style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                        style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+
                     <div>
-                        <h3 style="margin:0;font-size:16px;">{{ user.username }}</h3>
+                        <h3 style="margin:0;">{{ user.username }}</h3>
                         <p style="margin:4px 0 0;color:gray;font-size:13px;">
                             Tap to chat
                         </p>
                     </div>
                 </div>
             </a>
+        {% endfor %}
+
+    {% else %}
+
+    <!-- Conversations -->
+    {% for convo in conversations %}
+        {% for user in convo.participants.all %}
+            {% if user != request.user %}
+                <a href="{% url 'chat' convo.id %}" style="text-decoration:none;color:white;">
+                    <div style="display:flex;align-items:center;gap:15px;padding:15px;border-bottom:1px solid #222;">
+                        <img src="{{ user.profile.pfp.url }}"
+                             style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+
+                        <div>
+                            <h3 style="margin:0;font-size:16px;">{{ user.username }}</h3>
+                            <p style="margin:4px 0 0;color:gray;font-size:13px;">
+                                Tap to chat
+                            </p>
+                        </div>
+                    </div>
+                </a>
             {% endif %}
         {% endfor %}
     {% empty %}
@@ -29,5 +68,20 @@
             No conversations yet.
         </p>
     {% endfor %}
+    {% endif %}
+
 </div>
+
+<script>
+function showForm() {
+    const item = document.getElementById("form-search");
+
+    if (item.style.display === "block") {
+        item.style.display = "none";
+    } else {
+        item.style.display = "block";
+    }
+}
+</script>
+
 {% endblock %}

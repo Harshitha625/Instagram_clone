@@ -31,6 +31,7 @@ urlpatterns = [
     # add the story
     path('story/add/',views.add_story,name = 'add_story'),
     path('stories/<str:username>/',views.view_story,name = 'view_story'),
+    path('delete_story/<int:pk>/',views.delete_story,name = 'delete_story'),
 
     # messages
     path('messages/',views.inbox,name='inbox'),

@@ -24,7 +24,7 @@ a{
 
 /* left - bar */
 .left-bar{
-    width: 20%;
+    width: 15%;
     height: 100vh;
     border-right: 1px solid #504949;
 }
@@ -221,21 +221,29 @@ a{
 
 .add-comment form{
     margin-top: 10px;
+    display: flex;
+    align-items: center;
 }
 
-.add-comment textarea{
+.add-comment .add{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+}
+
+.add-comment .add textarea{
     height: 50px;
     border-radius: 10px;
     outline: none;
     background-color: #000;
     color: #fff;
-    padding: 2px;
 }
 
 .add-comment button{
     border-radius: 5px;
-    background-color: white;
-    color: #0f0f0f;
+    padding: 12px;
+    display: flex;
 }
 
 .showcomments .comment span img{
@@ -314,6 +322,7 @@ a{
     align-items: center;
     padding: 10px;
     font-size: 14px;
+    margin-top: 20px;
 }
 
 .suggestion-section .profile{
@@ -524,3 +533,29 @@ html{
 }
 
 
+@media(max-width:990px){
+    .left-bar .items{
+        display: flex;
+        justify-content: center;
+        font-size: larger;
+    }
+    .left-bar .items span{
+        display: none;
+    }
+    .suggestion-section{
+        display: none;
+    }
+    .post{
+        width: 100%;
+    }
+}
+
+
+.active-menu{
+    background: rgba(255,255,255,0.15);
+    border-radius:8px;
+}
+
+.left-bar .items.active-menu:hover{
+    background: rgba(255,255,255,0.25);
+}

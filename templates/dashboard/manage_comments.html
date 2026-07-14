@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h1>Manage Comments</h1>
+    <table class="dashboard-table">
+        <tr>
+            <th>User</th>
+            <th>Post</th>
+            <th>Comment</th>
+            <th>Created</th>
+            <th>Delete</th>
+        </tr>
+        {% for comment in comments %}
+            <tr>
+            <td>{{ comment.user.username }}</td>
+            <td>{{ comment.post.id }}</td>
+            <td>{{ comment.text }}</td>
+            <td>{{ comment.created_at|timesince }} ago</td>
+            <td>
+                <a href="{% url 'delete_comment_admin' comment.id %}"
+                onclick="return confirm('Delete this comment?')">
+                    <i class="fa-solid fa-trash" style="color:red;"></i>
+                </a>
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

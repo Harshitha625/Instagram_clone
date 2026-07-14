@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+     <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h1>Manage Stories</h1>
+    <table class="dashboard-table">
+    <tr>
+        <th>Story</th>
+        <th>User</th>
+        <th>Created</th>
+        <th>Delete</th>
+    </tr>
+    {% for story in stories %}
+        <tr>
+        <td>
+        <img src="{{ story.image.url }}" width="70">
+        </td>
+        <td>{{ story.user.username }}</td>
+        <td>{{ story.created_at|timesince }} ago</td>
+        <td>
+            <a href="{% url 'delete_story_admin' story.id %}"
+            onclick="return confirm('Delete this story?')">
+                <i class="fa-solid fa-trash" style="color:red;"></i>
+            </a>
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

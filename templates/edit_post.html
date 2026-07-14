@@ -1,15 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% load crispy_forms_tags %}
-    <a href="javascript:history.back()" style="margin:auto"><i class="fa-solid fa-arrow-left"></i></a>
-    <div class="add_post_container">
-        <form action="" method="post" enctype="multipart/form-data">
+{% load crispy_forms_tags %}
+
+<div style="width:100%;display:flex;justify-content:center;align-items:center;padding:40px;">
+
+    <div style="width:450px;background:#111;border:1px solid #333;border-radius:12px;padding:30px;">
+
+        <a href="javascript:history.back()"
+           style="color:white;font-size:22px;text-decoration:none;">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h2 style="text-align:center;margin:20px 0 30px 0;color:white;">
+            Edit User
+        </h2>
+
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form | crispy }}
-            <button type="submit" class="btn">Add</button>
+
+            <div style="margin-bottom:20px;">
+                {{ form|crispy }}
+            </div>
+
+            <button
+                type="submit"
+                style="
+                    width:100%;
+                    padding:12px;
+                    background:#0095f6;
+                    color:white;
+                    border:none;
+                    border-radius:8px;
+                    font-size:16px;
+                    font-weight:bold;
+                    cursor:pointer;
+                ">
+                Save Changes
+            </button>
         </form>
     </div>
-
+</div>
 {% endblock %}
-

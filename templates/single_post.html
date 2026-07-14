@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="post">
-        <div class="main-post">
+    <div class="post" style="height: 100vh;">
+        <div class="main-post" style="padding-top: 20px;height:60vh;">
             <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
             <div class="profile">
                 <img src="{{ post.user.profile.pfp.url }}" alt="hello">
-                <h3><a href="{% url 'profilepage' post.user.username %}">{{ post.user.username }}</a></h3> <span> {{ post.created_at | timesince }}</span>
+                <h3><a href="{% url 'profilepage' post.user.username %}">{{ post.user.username }}</a></h3> . <span> {{ post.created_at | timesince }}</span>
             </div> 
             <div class="media">
                 {% if post.img %}
@@ -60,7 +60,7 @@
                                 </button>
 
                                 <!-- Reply Form -->
-                                <form method="post" id="reply-form-{{ comment.id }}" style="display:none;">
+                                <form method="post" action="" id="reply-form-{{ comment.id }}" style="display:none;">
                                     {% csrf_token %}
                                     <input type="text" name="text" placeholder="Reply...">
 
@@ -78,7 +78,7 @@
                                                 <img src="{{ reply.user.profile.pfp.url }}" alt="" width="20px" height="20px">
                                             </span>
 
-                                            <span>{{ reply.user.username }}</span>
+                                            <span>{{ reply.user.username }} . <small>{{ reply.created_at | timesince }} ago</small></span>
                                             <span>{{ reply.text }}</span>
                                         </div>
                                     {% endfor %}
@@ -89,20 +89,20 @@
                     </div>
 
                     <div class="add-comment" >
-                    <form action="" method="post">
+                    <form action="" method="post" style="display: flex;gap:10px;">
                         {% csrf_token %}
                         {{ comment_form.text }}
                         <input type="hidden" name="post_id" value="{{post.id}}">
-                        <button type="submit" style="padding: 5px;margin-top:5px">+ comment</button>
+                        <button type="submit" style="padding: 7px;margin-top:5px;font-weight:bold;">+comment</button>
                     </form>
                     </div>
                     <!-- comments end here -->
                 </div> 
             </div>
             {% if request.user.username == post.user.username %}
-            <div>
-                 <button type="submit" class="btn"  style="padding:5px 10px;font-weight:bold;"><a href="{% url 'edit_post' post.id %}">edit</a></button>
-                <button type="submit" class="btn" style="padding:5px 10px;margin:3%;font-weight:bold;"><a href="{% url 'delete_post' post.id %}">delete</a></button>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:15px;">
+                 <button type="submit" class="btn"  style="padding:8px 15px;font-weight:bold;background:#0095f6;color:white;border:none;border-radius:5px;cursor:pointer;"><a href="{% url 'edit_post' post.id %}" style="color:white;">edit</a></button>
+                <button type="submit" class="btn" style="padding:8px 15px;font-weight:bold;background:#ff4458;color:white;border:none;border-radius:5px;cursor:pointer;"><a href="{% url 'delete_post' post.id %}" style="color:white;">delete</a></button>
             </div>
             {% endif %}
         </div>  

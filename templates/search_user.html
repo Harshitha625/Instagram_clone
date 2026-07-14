@@ -6,12 +6,13 @@
 <div style="margin:5% auto;">
     <div >
         <form method="GET">
-            <input type="text" name="q" placeholder="search " value="{{ keyword }}" style="padding: 15px;width:250px;border-radius:10px;">
+            <input type="text" name="q" placeholder="search " value="{{ keyword|default:'' }}" style="padding: 15px;width:250px;border-radius:10px;">
             <button style="padding: 15px;border-radius: 10px;"><i class="fa-solid fa-search"></i></button>
         </form>
     </div>
     <div style="width:400px;display:flex;flex-direction:column;justify-content:flex-start">
-        {% for user in users %}
+        {% if users != None %}
+            {% for user in users %}
             <div style="padding:15px;margin-top:10px;">
                 <div>
                     <a href="{% url 'profilepage' user.username %}" style="display: flex;gap:20px;align-items:center;">
@@ -21,6 +22,7 @@
                 </div>
             </div>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 

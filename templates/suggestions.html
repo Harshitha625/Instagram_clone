@@ -1,0 +1,46 @@
+
+<!-- suggestion section -->
+        <div class="suggestion-section">
+
+            <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="{{ request.user.profile.pfp.url }}" alt="">
+                    </div>
+                    <div class="text">
+                        <h3>{{ request.user.username }}</h3>
+                        <p>{{ request.user.profile.name }}</p>
+                    </div>
+                </div>
+                <div class="follow">Switch</div>
+            </div>
+    
+            <div class="suggestion">
+                <div class="profile">
+                    <p>Suggested for you</p>
+                </div>
+                <div class="follow see">see All</div>
+            </div>
+
+            {% for suggestion in suggestions %}
+            <div class="suggestion">
+                <div class="profile">
+                    <div class="img">
+                        <img src="{{ suggestion.profile.pfp.url }}" alt="">
+                    </div>
+
+                    <div class="text">
+                        <h3>{{ suggestion.username }}</h3>
+                        <p>{{ suggestion.first_name }} {{ suggestion.last_name }}</p>
+                    </div>
+                </div>
+
+                <div class="follow">
+                    <a href="{% url 'follow_user' suggestion.username %}">
+                        Follow
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>

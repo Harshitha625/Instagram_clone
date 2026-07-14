@@ -4,7 +4,7 @@
     <div class="profile-page">
         <!-- profile and bio -->
         <div class="profile">
-            <a href="{% url 'home' %}"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
             <div>
                 <div class="left">
                 <div class="img">
@@ -36,6 +36,10 @@
                 {% if request.user.username == profile.user.username %}
                     <a href="{% url 'editProfile' user.username %}"><button class="message-btn">edit</button></a>
                     <a href="{% url 'saved_posts' %}"><button class="message-btn">saved posts</button></a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" style="padding:5px;background:white;color:black;border-radius:5px;font-weight:bold;">Logout</button>
+                    </form>
                 {% endif %}
             </div>
         </div>

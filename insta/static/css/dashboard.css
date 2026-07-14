@@ -1,0 +1,77 @@
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+    width:85%;
+    margin:auto;
+    padding:40px;
+}
+
+.dashboard h1{
+    margin-bottom:30px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.card{
+    background:#111;
+    border:1px solid #333;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    transition:.3s;
+}
+
+.card:hover{
+    border-color:#0095f6;
+    transform:translateY(-5px);
+}
+
+.card h2{
+    background:transparent;
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.card h1{
+    background:transparent;
+    font-size:50px;
+}
+
+.dashboard-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+.dashboard-table th{
+    background:#181818;
+    color:white;
+    padding:15px;
+    text-align:left;
+    border-bottom:1px solid #333;
+}
+
+.dashboard-table td{
+    padding:15px;
+    border-bottom:1px solid #333;
+    color:#ddd;
+}
+
+.dashboard-table tr:hover{
+    background:#111;
+}
+
+.dashboard-table img{
+    border-radius:8px;
+    object-fit:cover;
+}
+
+.dashboard-table a{
+    color:#0095f6;
+    text-decoration:none;
+    font-weight:bold;
+}

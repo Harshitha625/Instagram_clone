@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<div style="width:500px;margin:40px auto;padding:25px;background:#111;border:1px solid #333;border-radius:10px;">
+
+    <h2 style="text-align:center;margin-bottom:20px;">Edit User</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <div style="display:flex;justify-content:center;margin-top:20px;">
+            <button type="submit"
+            style="padding:10px 25px;
+                   background:#0095f6;
+                   color:white;
+                   border:none;
+                   border-radius:6px;
+                   cursor:pointer;
+                   font-weight:bold;">
+                Save Changes
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -5,6 +5,7 @@ from . forms import addPostForm,ChangeProfile,CommentForm,StoryForm
 from django.contrib.auth.decorators import login_required
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models.functions import Random
 
 @login_required
 def home(request):
@@ -54,11 +55,14 @@ def home(request):
     ).exclude(
         id = request.user.id
     )
-    suggestions = suggestions[:5]
+    suggestions = suggestions.order_by(Random())[:5]
     ### ends here ###
 
     # -----stories----- #
-    stories = Story.objects.order_by('-created_at')
+    time_limit = timezone.now()-timedelta(hours=24)
+    stories = Story.objects.filter(
+        created_at__gte = time_limit
+    ).order_by('-created_at')
     users_seen = set()
     story_users = []
     for story in stories:
@@ -157,7 +161,7 @@ def view_post(request, pk):
 
 @login_required
 def edit_post(request,pk):
-    post = get_object_or_404(Posts,pk = pk)
+    post = get_object_or_404(Posts,pk = pk,user = request.user)
     if request.method == "POST":
         form = addPostForm(request.POST,request.FILES,instance=post)
         if form.is_valid():
@@ -171,13 +175,15 @@ def edit_post(request,pk):
 
 @login_required
 def delete_post(request,pk):
-    post = get_object_or_404(Posts,pk = pk)
+    post = get_object_or_404(Posts,pk = pk,user = request.user)
     post.delete()
     return redirect('profilepage',username = request.user.username)
 
 
 @login_required
 def editProfile(request,username):
+    if(request.user.username != username):
+        return redirect('home')
     user = get_object_or_404(User,username = username)
     profile = user.profile
     if request.method == 'POST':
@@ -198,8 +204,10 @@ def delete_comment(request,pk):
     comment = get_object_or_404(Comments,pk=pk)
     post = comment.post
     user = post.user
-    if comment.user == request.user:
+    # user can delete their comment and post user can delete the comment
+    if comment.user == request.user or request.user == post.user:
         comment.delete()
+        # after deleting the notification must be deleted from the post user
         if request.user != post.user:
             Notifications.objects.filter(
                 sender = comment.user,
@@ -282,10 +290,10 @@ def view_following(request,username):
 @login_required
 def search_user(request):
     keyword = request.GET.get('q')
+    users = None
     if keyword:
-        users = User.objects.filter(username__icontains = keyword)
-    else:
-        users = User.objects.none()
+        # exclude the requested user
+        users = User.objects.filter(username__icontains = keyword).exclude(id=request.user.id)
     context = {
         'users':users,
         'keyword':keyword,
@@ -350,26 +358,41 @@ def add_story(request):
     }
     return render(request,'add_story.html',context)
 
-
+@login_required
 def view_story(request,username):
     user = get_object_or_404(User,username = username)
-    stories = Story.objects.filter(user = user).order_by("-created_at")
+    time_limit = timezone.now() - timedelta(hours = 24)
+    stories = Story.objects.filter(user = user,
+        created_at__gte = time_limit).order_by("-created_at")
     context = {
         'stories':stories,
         'story_user':user,
     }
     return render(request, "view_story.html", context)
 
+@login_required
+def delete_story(request,pk):
+    story = get_object_or_404(Story,pk = pk)
+    story.delete()
+    return redirect('home')
 
+@login_required
 def inbox(request):
+    if request.method == "GET":
+        keyword = request.GET.get('q')
+        users = None
+        if keyword:
+            users = User.objects.filter(username__icontains = keyword).exclude(id=request.user.id)
     conversations = Conversation.objects.filter(
         participants= request.user
-    )
+    ).order_by("-created_at")
     context = {
-        'conversations':conversations
+        'conversations':conversations,
+        'search_users':users,
     }
     return render(request,'inbox.html',context)
 
+@login_required
 def start_chat(request,username):
     other_user = get_object_or_404(User,username = username)
     conversation = Conversation.objects.filter(
@@ -383,9 +406,13 @@ def start_chat(request,username):
 
     return redirect("chat",conversation.id)
 
+
+@login_required
 def chat(request,conversation_id):
     conversation = get_object_or_404(
-        Conversation,id = conversation_id,
+        Conversation,
+        id = conversation_id,
+        participants = request.user,
     )
     if request.method == "POST":
         text = request.POST.get('text')
@@ -404,6 +431,3 @@ def chat(request,conversation_id):
         "messages": messages,
     }
     return render(request,'chat.html',context)
-
-
-

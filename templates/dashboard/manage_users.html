@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+     <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h1>Manage Users</h1>
+    <table class="dashboard-table">
+        <tr>
+            <th>Profile</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Action</th>
+            <th>Edit/Delete</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>
+                <img src="{{ user.profile.pfp.url }}" width="45" height="45" style="border-radius:50%;">
+            </td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>
+                <a href="{% url 'profilepage' user.username %}">View</a>
+            </td>
+            <td>
+                <a href="{% url 'edit_user' user.id %}">
+                    <i class="fa-regular fa-edit" style="color:deepskyblue;"></i>
+                </a>
+
+                &nbsp;
+
+                <a href="{% url 'delete_user' user.id %}"
+                onclick="return confirm('Delete this user?')">
+                    <i class="fa-solid fa-trash" style="color:red;"></i>
+                </a>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

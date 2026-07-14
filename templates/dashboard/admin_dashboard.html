@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <h1>Admin Dashboard</h1>
+
+    <div class="cards">
+
+        <a href="{% url 'manage_users' %}" class="card">
+            <h2>Users</h2>
+            <h1>{{ users }}</h1>
+        </a>
+
+        <a href="{% url 'manage_posts' %}" class="card">
+            <h2>Posts</h2>
+            <h1>{{ posts }}</h1>
+        </a>
+
+        <a href="{% url 'manage_comments' %}" class="card">
+            <h2>Comments</h2>
+            <h1>{{ comments }}</h1>
+        </a>
+
+        <a href="{% url 'manage_stories' %}" class="card">
+            <h2>Stories</h2>
+            <h1>{{ stories }}</h1>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -17,6 +17,12 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'rows': 1,
+                'style': 'height:35px; padding:6px;'
+            })
+        }
 
 class StoryForm(forms.ModelForm):
     class Meta:
